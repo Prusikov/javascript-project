@@ -18,18 +18,20 @@ const monsterNames = [
   'Ogre',
   'Vampire',
   'Wendigo',
-  'Werewolf',
+  'Werewolf'
 ];
 
 const RARITY_LIST = ['Common', 'Unusual', 'Rare', 'Epic'];
+const items = []; // Array of item objects. These will be used to clone new items with the appropriate properties.
 const GAME_STEPS = ['SETUP_PLAYER', 'SETUP_BOARD', 'GAME_START'];
-let gameStep = 0;
+let gameStep = 0; // The current game step, value is index of the GAME_STEPS array.
 let board = []; // The board holds all the game entities. It is a 2D array.
 
 const items = []; // Array of item objects. These will be used to clone new items with the appropriate properties.
 //'attack','exp','gold','hp','speed'
 
-const player = {// The player object
+const player = {
+  // The player object
   level: 1,
   gold: 0,
   items: items,
@@ -38,11 +40,11 @@ const player = {// The player object
   hp: 100,
   speed: 3000,
   type: 'player',
-  attack: 10,
+  attack: 10
   //getExpToLevel:, -> function
   //getMaxHp:,-> function
   //skills:-> array
-}; 
+};
 
 // Utility function to print messages with different colors. Usage: print('hello', 'red');
 function print(arg, color) {
@@ -59,37 +61,37 @@ function printSectionTitle(title, count = 20) {
 // Sets the name property for the player and prints a message to notice the user of the change
 function setName(name) {
   player.name = name;
-  print('Hello ' + name)
+  print('Hello ' + name);
 }
 
 // Returns a new object with the same keys and values as the input object
-function clone(entity) {
- 
-}
+function clone(entity) {}
 
 // returns true or false to indicate whether 2 different objects have the same keys and values
-function assertEquality(original, clone) {
-  if (original.length != clone.length) {
+function assertEqual(obj1, obj2) {
+  if (obj1.length != ob2.length) {
     return false;
   }
-
 }
+
+// Clones an array of objects
+// returns a new array of cloned objects. Useful to clone an array of item objects
+function cloneArray(objs) {}
 
 // Uses a player item (note: this consumes the item, need to remove it after use)
-// itemName is a string. target is an entity (typically player)
-function useItem(itemName, target) {
-
-}
+// itemName is a string, target is an entity (i.e. monster, tradesman, player, dungeon)
+// If target is not specified, item should be used on player for type 'potion'. Else, item should be used on the entity at the same position
+// First item of matching type is used
+function useItem(itemName, target) {}
 
 // Uses a player skill (note: skill is not consumable, it's useable infinitely besides the cooldown wait time)
 // skillName is a string. target is an entity (typically monster).
-function useSkill(skillName, target) {
+// If target is not specified, skill shoud be used on the entity at the same position
+function useSkill(skillName, target) {}
 
-}
-
-// Updates the value of 'board' by creating the rows and columns
-//x First and last rows are walls
-//x First and last columns are walls
+// Sets the board variable to a 2D array of rows and columns
+// First and last rows are walls
+// First and last columns are walls
 // All the other entities are grass entities
 function createBoard(rows, columns) {
   let str;
@@ -100,31 +102,27 @@ function createBoard(rows, columns) {
   //placePlayer();
 
   board.push(firstLast); //first rows
-   
-  for (let i = 0; i < rows; i++){
-    board.push('#' + '.'.repeat(columns - 2) + '#');
-  }  
 
-  
-  board.push(firstLast);//last rows
+  for (let i = 0; i < rows; i++) {
+    board.push('#' + '.'.repeat(columns - 2) + '#');
+  }
+
+  board.push(firstLast); //last rows
 }
 
 // Updates the board by setting the entity at the entity position
 // An entity has a position property, each board cell is an object with an entity property holding a reference to the entity at that position
 // When a player is on a board cell, the board cell keeps the current entity property (e.g. monster entity at that position) and may need to have an additional property to know the player is there too.
-function updateBoard(entity) {
-
-}
+function updateBoard(entity) {}
 
 // Sets the position property of the player object to be in the middle of the board
 // You may need to use Math methods such as Math.floor()
 function placePlayer() {
   let x = Math.floor(board[0].length / 2);
   let y = Math.floor(board.length / 2);
-  board[y][x]["entities"].push("P");
-  board[y][x]["display"] = "P";
+  board[y][x]['entities'].push('P');
+  board[y][x]['display'] = 'P';
   player.position = { x: x, y: y };
-
 }
 
 // Creates the board and places player
@@ -137,7 +135,13 @@ function printBoard() {
   print(board);
 }
 
+// Sets the player variable to a player object based on the specifications of the README file
+// The items property will need to be a new array of cloned item objects
+// Prints a message showing player name and level (which will be 1 by default)
+function createPlayer(name, level = 1, items = []) {}
+
 // Creates a monster object with a random name with the specified level, items and position
+// The items property will need to be a new array of cloned item objects
 // The entity properties (e.g. hp, attack, speed) must respect the rules defined in the README
 function createMonster(level, items, position) {
   monster.name = name;
@@ -147,38 +151,43 @@ function createMonster(level, items, position) {
 }
 
 // Creates a tradesman object with the specified items and position. hp is Infinity
-function createTradesman(items, position) {
+// The items property will need to be a new array of cloned item objects
+function createTradesman(items, position) {}
 
-}
-
-// Creates an item entity by cloning one of the item objects and adding a the position and type properties.
-function createItem(itemIdx, position) {
-
-}
+// Creates an item entity by cloning one of the item objects and adding the position and type properties.
+// item is a reference to one of the items in the items variable. It needs to be cloned before being assigned the position and type properties.
+function createItem(item, position) {}
 
 // Creates a dungeon entity at the specified position
-function createDungeon(position) {
-
-}
+// The other parameters are optional. You can have unlocked dungeons with no princess for loot, or just empty ones that use up a key for nothing.
+function createDungeon(
+  position,
+  isLocked = true,
+  hasPrincess = true,
+  items = [],
+  gold = 0
+) {}
 
 // Moves the player in the specified direction
 // You will need to handle encounters with other entities e.g. fight with monster
-function move(direction) {
-  
-}
+function move(direction) {}
 
 function setupPlayer() {
   printSectionTitle('SETUP PLAYER');
-   print("Please enter your name using the setName function. Usage: setName('Bob')");
-   print("Once you're done, go to the next step with next()");
-
+  print(
+    "Please create a player using the createPlayer function. Usage: createPlayer('Bob')"
+  );
+  print(
+    "You can optionally pass in a level and items, e.g. createPlayer('Bob', 3, [items[0], items[2]]). items[0] refers to the first item in the items variable"
+  );
+  print("Once you're done, go to the next step with next()");
 }
 
 function setupBoard() {
   printSectionTitle('SETUP BOARD');
   print('Please create a board using initBoard(rows, columns)');
   print(
-    'Setup monsters, items and more using createMonster(attr), createItem(itemIdx, pos), createTradesman(items, pos), createDungeon(pos), updateBoard(entity)'
+    'Setup monsters, items and more using createMonster(attr), createItem(item, pos), createTradesman(items, pos), createDungeon(pos), updateBoard(entity)'
   );
   print("Once you're done, go to the next step with next()");
 }
@@ -186,7 +195,9 @@ function setupBoard() {
 function startGame() {
   printSectionTitle('START GAME');
   print('Hello ' + player.name);
-  print("You are ready to start your adventure. Use move('U' | 'D' | 'L' | 'R') to get going.");
+  print(
+    "You are ready to start your adventure. Use move('U' | 'D' | 'L' | 'R') to get going."
+  );
   printBoard();
 }
 
