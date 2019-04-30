@@ -27,9 +27,6 @@ const GAME_STEPS = ['SETUP_PLAYER', 'SETUP_BOARD', 'GAME_START'];
 let gameStep = 0; // The current game step, value is index of the GAME_STEPS array.
 let board = []; // The board holds all the game entities. It is a 2D array.
 
-const items = []; // Array of item objects. These will be used to clone new items with the appropriate properties.
-//'attack','exp','gold','hp','speed'
-
 const player = {
   // The player object
   level: 1,
@@ -58,18 +55,18 @@ function printSectionTitle(title, count = 20) {
   print('-'.repeat(count) + title + '-'.repeat(count), 'blue');
 }
 
-// Sets the name property for the player and prints a message to notice the user of the change
+/* Sets the name property for the player and prints a message to notice the user of the change
 function setName(name) {
   player.name = name;
   print('Hello ' + name);
-}
+}*/
 
 // Returns a new object with the same keys and values as the input object
 function clone(entity) {}
 
 // returns true or false to indicate whether 2 different objects have the same keys and values
 function assertEqual(obj1, obj2) {
-  if (obj1.length != ob2.length) {
+  if (obj1.length != obj2.length) {
     return false;
   }
 }
@@ -94,7 +91,7 @@ function useSkill(skillName, target) {}
 // First and last columns are walls
 // All the other entities are grass entities
 function createBoard(rows, columns) {
-  let str;
+  let arr;
   let firstLast = '#'.repeat(columns);
 
   print('Creating board and placing player...');
@@ -138,7 +135,10 @@ function printBoard() {
 // Sets the player variable to a player object based on the specifications of the README file
 // The items property will need to be a new array of cloned item objects
 // Prints a message showing player name and level (which will be 1 by default)
-function createPlayer(name, level = 1, items = []) {}
+function createPlayer(name, level = 1, items = []) {
+  player.name = name;
+  print('Hello ' + name);
+}
 
 // Creates a monster object with a random name with the specified level, items and position
 // The items property will need to be a new array of cloned item objects
